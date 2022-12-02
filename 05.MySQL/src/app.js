@@ -1,5 +1,4 @@
 const mysql = require('mysql2/promise');
-const config = require('./config');
 
 /**
  * createPool needs:
@@ -23,11 +22,16 @@ const config = require('./config');
  * 
  */
 
+require('dotenv').config();
+
+console.log(process.env.DB_HOST);
+console.log(process.env.DB_DATABASE);
+
 const pool = mysql.createPool({
-    host: config.DB_HOST,
-    user: config.DB_USER,
-    password: config.DB_PASSWORD,
-    database: config.DB_DATABSE,
+    host: process.env.DB_HOST || '127.0.0.1',
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD || '1234',
+    database: process.env.DB_DATABASE || 'sakila',
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
